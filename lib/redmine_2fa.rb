@@ -14,7 +14,7 @@ module Redmine2FA
   end
   
   def self.require_redmine_bot?
-    Redmine2FA.active_protocols.include?('telegram') || Redmine2FA.active_protocols.include?('sms')    
+    Redmine::Configuration['redmine_2fa']['enable_redmine_bot']
   end
 
   def self.switched_on?
