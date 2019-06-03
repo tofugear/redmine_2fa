@@ -12,6 +12,10 @@ module Redmine2FA
   def self.active_protocols
     Setting.plugin_redmine_2fa['active_protocols']
   end
+  
+  def self.require_redmine_bot?
+    Redmine2FA.active_protocols.include?('telegram') || Redmine2FA.active_protocols.include?('sms')    
+  end
 
   def self.switched_on?
     !switched_off?

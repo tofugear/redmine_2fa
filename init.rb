@@ -1,9 +1,12 @@
-require_dependency Rails.root.join('plugins','redmine_bots', 'init')
 
 FileUtils.mkdir_p(Rails.root.join('log/redmine_2fa')) unless Dir.exist?(Rails.root.join('log/redmine_2fa'))
 
 require 'redmine_2fa'
-require 'telegram/bot'
+
+if Redmine2FA.require_redmine_bot?
+  require_dependency Rails.root.join('plugins','redmine_bots', 'init')  
+  require 'telegram/bot'
+end 
 
 # Rails 5.1/Rails 4
 reloader = defined?(ActiveSupport::Reloader) ? ActiveSupport::Reloader : ActionDispatch::Reloader
@@ -31,10 +34,14 @@ Redmine::Plugin.register :redmine_2fa do
 
   requires_redmine version_or_higher: '3.0'
 
-  requires_redmine_plugin :redmine_bots, '0.2.0'
+  if Redmine2FA.require_redmine_bot?
+    requires_redmine_plugin :redmine_bots, '0.2.0'
+  end 
+
+  # Default no active protocol specified, need to turn on
 
   settings(default: { 'required' => false,
-                      'active_protocols' => Redmine2FA::AVAILABLE_PROTOCOLS
+                      'active_protocols' => %w(none)
   },
            partial: 'settings/redmine_2fa')
 end
