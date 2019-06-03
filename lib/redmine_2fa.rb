@@ -14,7 +14,7 @@ module Redmine2FA
   end
   
   def self.require_redmine_bot?
-    Redmine::Configuration['redmine_2fa']['enable_redmine_bot']
+    (Redmine::Configuration['redmine_2fa'] || {}).dig('enable_redmine_bot') || false
   end
 
   def self.switched_on?
