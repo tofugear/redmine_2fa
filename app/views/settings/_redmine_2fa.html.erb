@@ -1,4 +1,4 @@
-<%= render partial: 'settings/redmine_bots/deprecation_warning' %>
+<%= render partial: 'settings/redmine_bots/deprecation_warning' if Redmine2FA.require_redmine_bot? %>
 
 <h4><%= t 'redmine_2fa.settings.common.title' %></h4>
 <ul>
