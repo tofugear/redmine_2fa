@@ -10,7 +10,7 @@ module Redmine2FA
   end
 
   def self.active_protocols
-    Setting.plugin_redmine_2fa['active_protocols']
+    (Setting.plugin_redmine_2fa['active_protocols'] || [])
   end
   
   def self.require_redmine_bot?
